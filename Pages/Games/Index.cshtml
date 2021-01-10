@@ -1,0 +1,82 @@
+﻿@page "/{id:imt?}"
+@model Proiect_Muresan_Andrei_Cristian.Pages.Games.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Denumire)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Platform)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Edition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].ReleasDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].Publisher.PublisherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Game[0].GameGenres)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.GameD.Games) {
+    string selectedRow = "";
+    if(item.ID==Model.GameID)
+    {
+        selectedRow = "table-success";
+    }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Denumire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Platform)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Edition)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleasDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem=> item.Publisher.PublisherName)
+            </td>
+            <td>
+                @{ 
+                    foreach(var genre in item.GameGenres)
+                    {
+                        @genre.Genre.ID @: @genre.Genre.GenreName <br />
+                    }
+                }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

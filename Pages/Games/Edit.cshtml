@@ -1,0 +1,85 @@
+﻿@page
+@model Proiect_Muresan_Andrei_Cristian.Pages.Games.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Game.ID" />
+            <div class="form-group">
+                <label asp-for="Game.Denumire" class="control-label"></label>
+                <input asp-for="Game.Denumire" class="form-control" />
+                <span asp-validation-for="Game.Denumire" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.Platform" class="control-label"></label>
+                <input asp-for="Game.Platform" class="form-control" />
+                <span asp-validation-for="Game.Platform" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.Edition" class="control-label"></label>
+                <input asp-for="Game.Edition" class="form-control" />
+                <span asp-validation-for="Game.Edition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.Price" class="control-label"></label>
+                <input asp-for="Game.Price" class="form-control" />
+                <span asp-validation-for="Game.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Game.ReleasDate" class="control-label"></label>
+                <input asp-for="Game.ReleasDate" class="form-control" />
+                <span asp-validation-for="Game.ReleasDate" class="text-danger"></span>
+            </div>
+            <label asp-for="Game.PublisherID" class="control-label">Publisher Name</label>
+            <select asp-for="Game.PublisherID" class="form-control" asp-items="ViewBag.PublisherID">
+            </select>
+            <span asp-validation-for="Game.PublisherID" class="text-danger"></span>
+            <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                foreach (var cat in Model.AssignedGenresDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedGenres"
+                                               value="@cat.GenreID"
+                                               @(Html.Raw(cat.Assigned ? "checked=\"checked\"" : "")) />
+                                        @cat.GenreID @: @cat.Name
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
